@@ -1,3 +1,4 @@
+import axios from "axios";
 import express from "express";
 const cors = require("cors");
 
@@ -24,9 +25,7 @@ app.get("/posts", (req, res) => {
   res.json(posts);
 });
 
-app.post("/events", (req, res) => {
-  const { type, data } = req.body;
-
+const handleEvent = (type: string, data: any) => {
   switch (type) {
     case "PostCreated":
       const { id, title } = data;
@@ -51,8 +50,20 @@ app.post("/events", (req, res) => {
       }
       break;
   }
+};
+
+app.post("/events", (req, res) => {
+  const { type, data } = req.body;
+  handleEvent(type, data);
 });
 
-app.listen(4002, () => {
+app.listen(4002, async () => {
   console.log("Listening on 4002");
+
+  const res = await axios.get("http://localhost:4005/events");
+
+  for (let event of res.data) {
+    console.log("Processing Event:", event.type);
+    handleEvent(event.type, event.data);
+  }
 });

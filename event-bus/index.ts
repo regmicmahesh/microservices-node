@@ -4,14 +4,17 @@ import axios from "axios";
 const app = express();
 app.use(express.json());
 
-export interface Event{
+export interface Event {
   type: string;
   data: any;
 }
 
+const events: Event[] = [];
 
 app.post("/events", (req, res) => {
   const event: Event = req.body;
+
+  events.push(event);
 
   axios
     .post("http://localhost:4000/events", event)
@@ -28,6 +31,10 @@ app.post("/events", (req, res) => {
     .catch((err) => console.log(err));
 
   res.send({ status: "OK" });
+});
+
+app.get("/events", (req, res) => {
+  res.json(events);
 });
 
 app.listen(4005, () => {
