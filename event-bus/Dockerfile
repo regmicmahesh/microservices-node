@@ -7,4 +7,4 @@ FROM node:alpine
 WORKDIR /app
 COPY --from=build /app /app
 RUN rm -rf *.ts
-CMD ["npm", "start"]
+CMD ["npm","run","start-prod"]

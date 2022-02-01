@@ -1,0 +1,48 @@
+apiVersion: skaffold/v2alpha3
+
+kind: Config
+
+deploy:
+  kubectl:
+    manifests:
+      - ./infra/k8s/*
+
+build:
+  local:
+    push: false
+
+  artifacts:
+    - image: regmicmahesh/microsvc-client
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
+
+    - image: regmicmahesh/microsvc-comments
+      context: comments
+      docker:
+        dockerfile: Dockerfile
+
+
+    - image: regmicmahesh/microsvc-event-bus
+      context: event-bus
+      docker:
+        dockerfile: Dockerfile
+
+    - image: regmicmahesh/microsvc-moderation
+      context: moderation
+      docker:
+        dockerfile: Dockerfile
+
+    - image: regmicmahesh/microsvc-posts
+      context: posts
+      docker:
+        dockerfile: Dockerfile
+
+    - image: regmicmahesh/microsvc-query
+      context: query
+      docker:
+        dockerfile: Dockerfile

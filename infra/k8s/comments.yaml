@@ -1,39 +1,39 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: posts
+  name: comments
 
 spec:
   replicas: 1
 
   selector:
     matchLabels:
-      name: posts
+      name: comments
 
   template:
     metadata:
-      name: posts
+      name: comments
       labels:
-        name: posts
+        name: comments
     spec:
       containers:
-        - name: posts
-          image: regmicmahesh/microsvc-posts
+        - name: comments
+          image: regmicmahesh/microsvc-comments
           ports:
-            - containerPort: 4000
+            - containerPort: 4001
 
 ---
 apiVersion: v1
 kind: Service
 
 metadata:
-  name: posts-svc
+  name: comments-svc
 spec:
   type: ClusterIP
   selector:
-    name: posts
+    name: comments
   ports:
-    - name: posts
+    - name: comments
       protocol: TCP
-      port: 4000
-      targetPort: 4000
+      port: 4001
+      targetPort: 4001

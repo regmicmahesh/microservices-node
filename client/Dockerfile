@@ -2,4 +2,4 @@ FROM node:alpine
 WORKDIR /app
 COPY ./ ./
 RUN npm install
-CMD ["npm", "dev"]
+CMD ["npm", "run", "dev", "--host"]
