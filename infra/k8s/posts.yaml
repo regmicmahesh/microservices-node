@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: posts
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      name: posts
+
+  template:
+    metadata:
+      name: posts
+      labels:
+        name: posts
+    spec:
+      containers:
+        - name: posts
+          image: regmicmahesh/posts:0.0.1
+          imagePullPolicy: Never
